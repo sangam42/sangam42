@@ -1,0 +1,39 @@
+id: advent_taxonomy_term_specialist
+label: Associated Taxonomy Terms
+migration_tags:
+  - Drupal 7 
+# deriver: Drupal\node\Plugin\migrate\D7NodeDeriver
+deriver: Drupal\taxonomy\Plugin\migrate\D7TaxonomyTermDeriver
+migration_group: advent_health
+
+dependencies:
+  enforced:
+    module:
+      - advent_migrations
+source:
+  plugin: d7_taxonomy_term
+  bundle: specialities
+process:
+  tid: tid
+  vid:
+    plugin: default_value
+    default_value: specialities
+  name: name
+  'description/value': description
+  'description/format': format
+  weight: weight
+  parent:
+    -
+      plugin: skip_on_empty
+      source: parent
+      method: process
+    -
+      plugin: default_value
+      default_value: specialities
+  changed: timestamp
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies:
+  required:
+    - advent_taxonomy_vocabulary
+

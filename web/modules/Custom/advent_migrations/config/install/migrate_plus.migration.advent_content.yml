@@ -1,0 +1,50 @@
+id: Advent_content_blog
+label: Advent Blog Content
+migration_tags:
+  - Drupal 7
+deriver: Drupal\node\Plugin\migrate\D7NodeDeriver
+# Here we set an id of the migration group that we previously created to set up a correct source.
+migration_group: advent_health
+dependencies:
+  enforced:
+    module:
+      - advent_migrations
+source:
+  plugin: d7_node
+  node_type: blog
+destination:
+  plugin: entity:node
+  bundle: blog
+process:
+  nid: nid
+  vid: vid
+  type: type
+  langcode:
+    plugin: static_map
+    bypass: true
+    source: language
+    map:
+      und: en
+  title: title
+  uid: uid
+  status: status
+  created: created
+  changed: changed
+  promote: promote
+  sticky: sticky
+  'body/format':
+    plugin: static_map
+    bypass: true
+    source: body_format
+    map:
+      1: plain_text
+      2: restricted_html
+      3: full_html
+      4: full_html
+  'body': body
+  field_additional_content: field_additional_content
+  field_footnotes: field_footnotes
+  field_language: field_language
+  field_meta_tags: field_meta_tags
+  field_reference_field: field_reference_field
+  field_teaser_image: field_teaser_image

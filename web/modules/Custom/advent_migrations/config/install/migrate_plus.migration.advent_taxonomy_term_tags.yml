@@ -1,0 +1,39 @@
+id: advent_taxonomy_terms_tag
+label: Tag Taxonomy Terms
+migration_tags:
+  - Drupal 7 
+# deriver: Drupal\node\Plugin\migrate\D7NodeDeriver
+deriver: Drupal\taxonomy\Plugin\migrate\D7TaxonomyTermDeriver
+migration_group: advent_health
+
+dependencies:
+  enforced:
+    module:
+      - advent_migrations
+source:
+  plugin: d7_taxonomy_term
+  bundle: tags
+process:
+  tid: tid
+  vid:
+    plugin: default_value
+    default_value: tags
+  name: name
+  'description/value': description
+  'description/format': format
+  weight: weight
+  parent:
+    -
+      plugin: skip_on_empty
+      source: parent
+      method: process
+    -
+      plugin: default_value
+      default_value: tags
+  changed: timestamp
+destination:
+  plugin: entity:taxonomy_term
+migration_dependencies:
+  required:
+    - advent_taxonomy_vocabulary
+

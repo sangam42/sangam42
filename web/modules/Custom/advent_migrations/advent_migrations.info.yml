@@ -1,0 +1,10 @@
+name: Advent Migrations
+description: Migrate Platform Content
+type: module
+package: Other
+core: 8.x
+dependencies:
+  - migrate
+  - migrate_drupal
+  - migrate_plus
+  - migrate_tools

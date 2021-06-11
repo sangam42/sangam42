@@ -1,0 +1,35 @@
+id: advent_file
+label: Advent Health files
+migration_tags:
+  - Drupal 7
+# Here we set an id of the migration group that we previously created to set up a correct source.
+migration_group: advent_health
+source:
+  plugin: d7_file 
+  constants:
+    source_base_path: /home/powercms/public_html/adventicd/docroot
+process:
+  fid: fid
+  filename: filename
+  source_full_path:
+    -
+      plugin: concat
+      delimiter: /
+      source:
+        - constants/source_base_path
+        - filepath
+    -
+      plugin: urlencode
+  uri:
+    plugin: file_copy
+    source:
+      - '@source_full_path'
+      - uri
+  filemime: filemime
+  status: status
+  created: timestamp
+  changed: timestamp
+  uid: uid
+destination:
+  plugin: entity:file
+migration_dependencies: {}
